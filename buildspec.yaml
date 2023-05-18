@@ -1,13 +1,10 @@
 version: 0.2
 
-run-as: ec2-user
-
 phases:
   install:
     runtime-versions:
       nodejs: 16
     commands:
-      - n 18
       - echo Entered the install phase...
       - apt-get update -y
       - npm install
