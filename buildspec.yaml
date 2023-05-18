@@ -8,6 +8,7 @@ phases:
       - echo Entered the install phase...
       - npm install
       - npx playwright install
+      - npx playwright install-deps
   pre_build:
     commands:
       - echo Entered the pre_build phase...
