@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:18-browsers
+    steps:
+      - checkout
+
+      - run:
+          name: Install dependencies
+          command: npm ci
+
+      - run:
+          name: Run tests
+          command: npm test
