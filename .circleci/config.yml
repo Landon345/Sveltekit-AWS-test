@@ -13,14 +13,17 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Install Dependencies
-          command: npm install
+          command: npm ci
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
       - run:
-          name: Playwright dependencies
+          name: Playwright install
           command: npx playwright install
+      - run:
+          name: Playwright dependencies
+          command: sudo npx playwright install-deps
       - run:
           name: Run tests
           command: npm run test
