@@ -25,5 +25,8 @@ jobs:
           name: Playwright dependencies
           command: sudo npx playwright install-deps
       - run:
-          name: Run tests
+          name: Run playwright tests
           command: npm run test
+      - run:
+          name: Run unit tests
+          command: npm run test:unit
