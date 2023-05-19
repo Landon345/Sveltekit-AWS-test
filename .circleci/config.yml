@@ -1,56 +1,62 @@
 version: 2.1
 jobs:
-  - test:
-      working_directory: ~/repo
-      docker:
-        - image: cimg/node:18.16.0
-      steps:
-        - checkout
-        - run:
-            name: Install pnpm
-            command: 'npm install -g pnpm'
-        - restore_cache:
-            keys:
-              - v1-deps-{{ checksum "package-lock.json" }}
-              - v1-deps-
-        - run:
-            name: Install Dependencies
-            command: pnpm install
-        - save_cache:
-            key: v1-deps-{{ checksum "package-lock.json" }}
-            paths:
-              - node_modules
-        - run:
-            name: Playwright install
-            command: npx playwright install
-        - run:
-            name: Playwright dependencies
-            command: sudo npx playwright install-deps
-        - run:
-            name: Run playwright tests
-            command: pnpm run test
-        - run:
-            name: Run unit tests
-            command: pnpm run test:unit
+  test:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/node:18.16.0
+    steps:
+      - checkout
+      - run:
+          name: Install pnpm
+          command: 'npm install -g pnpm'
+      - restore_cache:
+          keys:
+            - v1-deps-{{ checksum "package-lock.json" }}
+            - v1-deps-
+      - run:
+          name: Install Dependencies
+          command: pnpm install
+      - save_cache:
+          key: v1-deps-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Playwright install
+          command: npx playwright install
+      - run:
+          name: Playwright dependencies
+          command: sudo npx playwright install-deps
+      - run:
+          name: Run playwright tests
+          command: pnpm run test
+      - run:
+          name: Run unit tests
+          command: pnpm run test:unit
 
-  - deploy:
-      working_directory: ~/repo
-      docker:
-        - image: cimg/node:18.16.0
-      steps:
-        - checkout
-        - run:
-            name: Install pnpm
-            command: 'npm install -g pnpm'
-        - run:
-            name: Build project
-            command: pnpm run build
-        - run:
-            name: Install vercel cli
-            command: pnpm i -g vercel
-        - run:
-            name: Login to vercel
-            command: vercel login --token $VERCEL_TOKEN
-        - run:
-            name: Deploy to vercel
-            command: vercel deploy --yes --env KEY1=value1 --env KEY2=value2
+  deploy:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/node:18.16.0
+    steps:
+      - checkout
+      - run:
+          name: Install pnpm
+          command: 'npm install -g pnpm'
+      - run:
+          name: Build project
+          command: pnpm run build
+      - run:
+          name: Install vercel cli
+          command: pnpm i -g vercel
+      - run:
+          name: Login to vercel
+          command: vercel login --token $VERCEL_TOKEN
+      - run:
+          name: Deploy to vercel
+          command: vercel deploy --yes --env KEY1=value1 --env KEY2=value2
+
+workflows:
+  test_and_deploy:
+    jobs:
+      - test
+      - deploy
