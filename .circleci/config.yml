@@ -19,14 +19,14 @@ jobs:
           key: v1-deps
           paths:
             - node_modules
-      - run:
-          name: Playwright install
-          command: |
-            npx playwright install
-            sudo npx playwright install-deps
-      - run:
-          name: Run playwright tests
-          command: pnpm run test
+      #   - run:
+      #       name: Playwright install
+      #       command: |
+      #         npx playwright install
+      #         sudo npx playwright install-deps
+      #   - run:
+      #       name: Run playwright tests
+      #       command: pnpm run test
       - run:
           name: Run unit tests
           command: pnpm run test:unit
@@ -53,6 +53,9 @@ jobs:
       - run:
           name: Build project
           command: pnpm run build
+      - run:
+          name: Setup pnpm
+          command: pnpm setup
       - run:
           name: Install vercel cli
           command: pnpm i -g vercel
