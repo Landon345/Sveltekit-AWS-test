@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Install pnpm
-          command: 'npm install -g pnpm'
+          command: npm install -g pnpm
       - restore_cache:
           keys:
             - v1-deps-{{ checksum "package-lock.json" }}
@@ -41,7 +41,7 @@ jobs:
       - checkout
       - run:
           name: Install pnpm
-          command: 'npm install -g pnpm'
+          command: npm install -g pnpm
       - run:
           name: Build project
           command: pnpm run build
