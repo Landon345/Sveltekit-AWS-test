@@ -51,11 +51,8 @@ jobs:
           name: Install vercel cli
           command: sudo npm i -g vercel
       - run:
-          name: Login to vercel
-          command: vercel --token $VERCEL_TOKEN
-      - run:
           name: Deploy to vercel
-          command: vercel --token $VERCEL_TOKEN deploy --yes --env KEY1=value1 --env KEY2=value2
+          command: vercel deploy --token $VERCEL_TOKEN --yes --env KEY1=value1 --env KEY2=value2
 
 workflows:
   test_and_deploy:
