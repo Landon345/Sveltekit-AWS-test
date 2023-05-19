@@ -27,23 +27,6 @@ jobs:
       - run:
           name: Run unit tests
           command: npm run test:unit
-
-  deploy:
-    working_directory: ~/repo
-    docker:
-      - image: cimg/node:18.16.0
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v2-deps
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - save_cache:
-          key: v2-deps
-          paths:
-            - node_modules
       - run:
           name: Build project
           command: npm run build
@@ -52,10 +35,4 @@ jobs:
           command: sudo npm i -g vercel
       - run:
           name: Deploy to vercel
-          command: vercel deploy --token $VERCEL_TOKEN --yes --env KEY1=value1 --env KEY2=value2
-
-workflows:
-  test_and_deploy:
-    jobs:
-      - test
-      - deploy
+          command: vercel deploy --token $VERCEL_TOKEN --yes
