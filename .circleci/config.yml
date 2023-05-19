@@ -55,9 +55,7 @@ jobs:
           command: pnpm run build
       - run:
           name: Setup pnpm
-          command: |
-            export SHELL
-            pnpm setup
+          command: SHELL=$SHELL pnpm setup
       - run:
           name: Install vercel cli
           command: pnpm i -g vercel
