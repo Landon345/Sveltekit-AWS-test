@@ -49,7 +49,7 @@ jobs:
           command: npm run build
       - run:
           name: Install vercel cli
-          command: npm i -g vercel
+          command: sudo npm i -g vercel
       - run:
           name: Login to vercel
           command: vercel login --token $VERCEL_TOKEN
