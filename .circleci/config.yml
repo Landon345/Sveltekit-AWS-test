@@ -52,10 +52,10 @@ jobs:
           command: sudo npm i -g vercel
       - run:
           name: Login to vercel
-          command: vercel login --token $VERCEL_TOKEN
+          command: vercel --token $VERCEL_TOKEN
       - run:
           name: Deploy to vercel
-          command: vercel deploy --yes --env KEY1=value1 --env KEY2=value2
+          command: vercel --token $VERCEL_TOKEN deploy --yes --env KEY1=value1 --env KEY2=value2
 
 workflows:
   test_and_deploy:
