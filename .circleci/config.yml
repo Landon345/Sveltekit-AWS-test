@@ -11,21 +11,19 @@ jobs:
           command: sudo npm install -g pnpm
       - restore_cache:
           keys:
-            - v1-deps-{{ checksum "package-lock.json" }}
-            - v1-deps-
+            - v1-deps
       - run:
           name: Install Dependencies
           command: pnpm install
       - save_cache:
-          key: v1-deps-{{ checksum "package-lock.json" }}
+          key: v1-deps
           paths:
             - node_modules
       - run:
           name: Playwright install
-          command: npx playwright install
-      - run:
-          name: Playwright dependencies
-          command: sudo npx playwright install-deps
+          command: |
+            npx playwright install
+            sudo npx playwright install-deps
       - run:
           name: Run playwright tests
           command: pnpm run test
@@ -42,6 +40,16 @@ jobs:
       - run:
           name: Install pnpm
           command: sudo npm install -g pnpm
+      - restore_cache:
+          keys:
+            - v1-deps
+      - run:
+          name: Install Dependencies
+          command: pnpm install
+      - save_cache:
+          key: v1-deps
+          paths:
+            - node_modules
       - run:
           name: Build project
           command: pnpm run build
